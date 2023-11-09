@@ -1,4 +1,3 @@
-const { sign } = require('jsonwebtoken')
 const { Product } = require('../models/Product')
 
 class ProductController {
@@ -56,8 +55,69 @@ class ProductController {
             const { productId } = req.params
             const product= await Product.findByPk(productId)
 
-            return res.status(201).send(`Produto: ${product.name}`)
+            if(!product){
+                return res.status(404).send({message:`Produto não encontrado`})
+            }
 
+            return res.status(200).send({product})
+
+        } catch (error) {
+            return res.status(400).send({
+                message: "Erro ao listar o produto",
+                cause: error.message
+            })
+        }
+    }
+
+    async remove(req, res) {
+        try {
+            const { productId } = req.params
+            const product = await Product.findByPk(productId)
+
+            if(!product){
+                return res.status(404).send({message:`Produto não encontrado`})
+            }
+
+            await product.destroy()
+
+            return res.status(200).send({message: "Produto Removido com sucesso!"})
+        } catch (error) {
+            return res.status(400).send({
+                message: "Erro ao remover um produto",
+                cause: error.message
+            })
+        }
+    }
+
+    async restore(req, res) {
+        try {
+            const { productId } = req.params
+            const product = await Product.findOne({where: {productId:productId}, paranoid:false})
+
+            if(!product){
+                return res.status(404).send({message:`Produto não encontrado`})
+            }
+
+            await product.restore()
+
+            return res.status(201).send({message: "Produto Restaurado com sucesso!"})
+        } catch (error) {
+            return res.status(400).send({
+                message: "Erro ao restaurar um produto",
+                cause: error.message
+            })
+        }
+    }
+
+    async findAllAdm(req, res) {
+        try {
+            const product = await Product.findAll({paranoid:false})
+
+            if(!product){
+                return res.status(404).send({message:`Produto não encontrado`})
+            }
+
+            return res.status(200).send({product})
         } catch (error) {
             return res.status(400).send({
                 message: "Erro ao listar o produto",

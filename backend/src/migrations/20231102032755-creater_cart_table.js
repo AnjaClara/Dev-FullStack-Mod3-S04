@@ -31,8 +31,6 @@ module.exports = {
         defaultValue: true
       },
 
-      category: Sequelize.STRING,
-
       created_at: {
         type:Sequelize.DATE,
         allowNull: false

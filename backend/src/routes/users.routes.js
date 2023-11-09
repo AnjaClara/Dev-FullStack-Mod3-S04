@@ -1,7 +1,6 @@
-const { create, findAll, findOne, login } = require('../controller/users.controller')
+const { create, findAll, findOne, login, findCarts, update, updatePassword } = require('../controller/users.controller')
 const { Router } = require('express')
 const { auth } = require('../middlewares/auth.middleware')
-const { logger } = require('../middlewares/log.middleware')
 
 class UserRouter{
   routesFromUser(){
@@ -10,6 +9,8 @@ class UserRouter{
     userRoutes.get('/users', auth, findAll)
     userRoutes.get('/users/:userId', auth, logger, findOne)
     userRoutes.post('/users/login', login)
+    userRoutes.patch('/users/:userId/password', auth, updatePassword)
+    userRoutes.get('/users/:userId/carts', findCarts)
 
     return userRoutes
   }

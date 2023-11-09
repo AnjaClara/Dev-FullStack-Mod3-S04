@@ -11,20 +11,20 @@ module.exports = {
         autoIncrement: true,
         allowNull: false
       },
-      cart_id:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references:{
-          model: 'carts',
-          key: 'cart_id'
-        }
-      },
       product_id:{
         type: Sequelize.INTEGER,
         allowNull: false,
         references:{
           model: 'products',
           key: 'product_id'
+        }
+      },
+      cart_id:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references:{
+          model: 'carts',
+          key: 'cart_id'
         }
       },
       created_at: {

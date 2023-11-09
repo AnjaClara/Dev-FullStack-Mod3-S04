@@ -1,6 +1,7 @@
-const { INTEGER, STRING, DATE, BOOLEAN } = require('sequelize')
+const { INTEGER, BOOLEAN, FLOAT } = require('sequelize')
 const { connection } = require('../database/connection')
 const { Product } = require('./Product')
+const { ProductCart } = require('../models/ProductCart')
 
 const Cart = connection.define('carts', {
   cart_id:{
@@ -17,7 +18,7 @@ const Cart = connection.define('carts', {
     }
   },
   price: {
-    type: NUMERIC(2),
+    type: FLOAT,
     allowNull: false
   },
   status:{
@@ -25,7 +26,10 @@ const Cart = connection.define('carts', {
   },
 }, {underscored: true, paranoid: true})
 
-Cart.belongsToMany(Product, {foreignKey: 'cart_id'})
-Product.belongsToMany(Product, {foreignKey: 'cart_id'})
+Product.belongsToMany(Cart, { through: ProductCart, foreignKey: 'productId', as: 'carts' });
+Cart.belongsToMany(Product, { through: ProductCart, foreignKey: 'cartId', as: 'products' });
+
+ProductCart.hasMany(Cart, {foreignKey: 'cartId'})
+
 
 module.exports = { Cart }
