@@ -25,7 +25,7 @@ const Cart = connection.define('carts', {
   },
 }, {underscored: true, paranoid: true})
 
-Cart.belongsToMany(Product, {foreignKey: 'product_id'})
-Product.belongsToMany(Product, {foreignKey: 'product_id'})
+Cart.belongsToMany(Product, {foreignKey: 'cart_id'})
+Product.belongsToMany(Product, {foreignKey: 'cart_id'})
 
 module.exports = { Cart }

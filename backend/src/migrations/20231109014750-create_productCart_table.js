@@ -5,28 +5,28 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     
     await queryInterface.createTable('productCarts', { 
-      productCart_id: {
+      id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false
+      cart_id:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references:{
+          model: 'carts',
+          key: 'cart_id'
+        }
       },
-
-      description: Sequelize.STRING,
-        
-      price: {
-        type: Sequelize.NUMERIC(2),
-        allowNull: false
+      product_id:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references:{
+          model: 'products',
+          key: 'product_id'
+        }
       },
-
-      logoUrl: Sequelize.STRING,
-
-      category: Sequelize.STRING,
-
       created_at: {
         type:Sequelize.DATE,
         allowNull: false
@@ -42,7 +42,7 @@ module.exports = {
     });
      
   },
-  
+
   async down (queryInterface, Sequelize) {
    
     await queryInterface.dropTable('productCarts');

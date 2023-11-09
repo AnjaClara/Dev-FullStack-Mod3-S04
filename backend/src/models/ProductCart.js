@@ -1,32 +1,23 @@
-const { INTEGER, STRING, DATE, BOOLEAN } = require('sequelize')
+const { INTEGER } = require('sequelize')
 const { connection } = require('../database/connection')
-const { Cart } = require('./Cart')
 
 const ProductCart = connection.define('productCarts', {
-  productCart_id: {
+  cart_id:{
     type: INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-    allowNull: false
+    allowNull: false,
+    references:{
+      model: 'carts',
+      key: 'cart_id'
+    }
   },
-  name: {
-    type: STRING,
-    allowNull: false
+  product_id:{
+    type: INTEGER,
+    allowNull: false,
+    references:{
+      model: 'users',
+      key: 'product_id'
+    }
   },
-
-  description: STRING,
-    
-  price: {
-    type: NUMERIC(2),
-    allowNull: false
-  },
-
-  logoUrl: STRING,
-
-  category: STRING,
 }, {underscored: true, paranoid: true})
-
-Cart.belongsToMany(ProductCart, {foreignKey: 'productCart_id'})
-ProductCart.belongsToMany(ProductCart, {foreignKey: 'productCart_id'})
 
 module.exports = { ProductCart }
