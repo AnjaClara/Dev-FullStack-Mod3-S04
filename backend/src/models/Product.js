@@ -1,5 +1,6 @@
 const { INTEGER, STRING, DATE, BOOLEAN } = require('sequelize')
 const { connection } = require('../database/connection')
+const { Cart } = require('./Cart')
 
 const Product = connection.define('products', {
   product_id: {
