@@ -1,8 +1,9 @@
 const { INTEGER, STRING, DATE, BOOLEAN } = require('sequelize')
 const { connection } = require('../database/connection')
+const { Product } = require('./Product')
 
-const Card = connection.define('card', {
-  card_id:{
+const Cart = connection.define('carts', {
+  cart_id:{
     type: INTEGER,
     primaryKey: true,
     autoIncrement: true
@@ -22,6 +23,9 @@ const Card = connection.define('card', {
   status:{
     type: BOOLEAN,
   },
-})
+}, {underscored: true, paranoid: true})
 
-module.exports = { Card }
+Cart.belongsToMany(Product, {foreignKey: 'product_id'})
+Product.belongsToMany(Product, {foreignKey: 'product_id'})
+
+module.exports = { Cart }

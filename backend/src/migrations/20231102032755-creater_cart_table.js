@@ -4,26 +4,32 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     
-    await queryInterface.createTable('products', { 
-      product_id: {
+    await queryInterface.createTable('carts', { 
+      cart_id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
 
-      description: Sequelize.STRING,
+      user_id:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references:{
+          model: 'users',
+          key: 'user_id'
+        }
+      },
         
       price: {
         type: Sequelize.NUMERIC(2),
         allowNull: false
       },
 
-      logoUrl: Sequelize.STRING,
+      status:{
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
+      },
 
       category: Sequelize.STRING,
 
@@ -45,8 +51,7 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
    
-    await queryInterface.dropTable('products');
+    await queryInterface.dropTable('carts');
      
   }
 };
-
