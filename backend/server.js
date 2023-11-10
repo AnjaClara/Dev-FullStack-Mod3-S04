@@ -1,4 +1,4 @@
-// const Sentry = require("@sentry/node");
+const Sentry = require("@sentry/node");
 const express = require('express');
 const { connection } = require('./src/database/connection');
 const routes = require('./src/routes');
@@ -17,12 +17,12 @@ class Server {
         
     }
 
-    // initializeSentry() {
-    //     Sentry.init({
-    //         dsn: 'https://328f1142106d483904564bf2431f9d20@o4505801595944960.ingest.sentry.io/4505801794912256',
+    initializeSentry() {
+        Sentry.init({
+            dsn: 'https://328f1142106d483904564bf2431f9d20@o4505801595944960.ingest.sentry.io/4505801794912256',
             
-    //     });
-    // }
+        });
+    }
 
     async middlewares(app) {
         app.use(cors());
@@ -46,8 +46,8 @@ class Server {
     }
 
     async allRoutes(app) {
-        // app.use(Sentry.Handlers.requestHandler());
-        // app.use(Sentry.Handlers.errorHandler());
+        app.use(Sentry.Handlers.requestHandler());
+        app.use(Sentry.Handlers.errorHandler());
 
         app.use(routes);
     }

@@ -8,16 +8,16 @@ class ProductController {
                 description,
                 price,
                 logoUrl,
-                category
+                category,
             } = req.body
 
-            const existProduct = await Product.findOne({where:{name:name}})
+            const existProduct = await Product.findOne({where:{ name:name}})
 
-            if (existProduct){
-              return res.status(403).send({message: "Produto já cadastrado com esse nome"})
+            if(existProduct){
+                return res.status(403).send({message: "Produto já cadastrado com esse nome"})
             }
 
-            const userCreated = await Product.create({
+            const productCreated = await Product.create({
                 name,
                 description,
                 price,
@@ -25,11 +25,10 @@ class ProductController {
                 category
             })
 
-            return res.status(201).send(userCreated)
-            
+            return res.status(201).send(productCreated)
         } catch (error) {
             return res.status(400).send({
-                message: "Erro na criação de produto",
+                message: "Erro na criação de Produto",
                 cause: error.message
             })
         }
@@ -37,11 +36,9 @@ class ProductController {
 
     async findAll(req, res) {
         try {
+            const products = await Product.findAll()
 
-            const users= await Product.findAll()
-
-            return res.status(201).send(users)
-
+            return res.status(200).send(products)
         } catch (error) {
             return res.status(400).send({
                 message: "Erro ao listar todos os produtos",
@@ -53,14 +50,13 @@ class ProductController {
     async findOne(req, res) {
         try {
             const { productId } = req.params
-            const product= await Product.findByPk(productId)
+            const product = await Product.findByPk(productId)
 
             if(!product){
                 return res.status(404).send({message:`Produto não encontrado`})
             }
 
             return res.status(200).send({product})
-
         } catch (error) {
             return res.status(400).send({
                 message: "Erro ao listar o produto",
@@ -125,7 +121,6 @@ class ProductController {
             })
         }
     }
-
 }
 
 module.exports = new ProductController()

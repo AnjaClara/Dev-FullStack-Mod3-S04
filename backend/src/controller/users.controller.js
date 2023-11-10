@@ -1,8 +1,8 @@
-// const Sentry = require('@sentry/node');
+const Sentry = require('@sentry/node');
 const { sign } = require('jsonwebtoken')
 const { User } = require('../models/User')
 const { Cart } = require('../models/Cart')
-const { update, verifyUser } = require('../services/user.service')
+const { update, verifyUser } = require('../service/user.service')
 const bcrypt = require('bcrypt')
 
 

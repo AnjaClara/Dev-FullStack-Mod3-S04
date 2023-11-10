@@ -2,22 +2,22 @@ const { INTEGER } = require('sequelize')
 const { connection } = require('../database/connection')
 
 const ProductCart = connection.define('productCarts', {
-  cart_id:{
-    type: INTEGER,
-    allowNull: false,
-    references:{
-      model: 'carts',
-      key: 'cart_id'
-    }
+  productId: {
+      type: INTEGER,
+      references: {
+          model: {
+              tableName: 'products'
+          }
+      }
   },
-  product_id:{
-    type: INTEGER,
-    allowNull: false,
-    references:{
-      model: 'users',
-      key: 'product_id'
-    }
+  cartId: {
+      type: INTEGER,
+      references: {
+          model: {
+              tableName: 'carts'
+          }
+      }
   },
-}, {underscored: true, paranoid: true})
+}, {undescored: true, paranoid: true })
 
 module.exports = { ProductCart }

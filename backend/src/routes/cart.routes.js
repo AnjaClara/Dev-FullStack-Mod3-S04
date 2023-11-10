@@ -1,6 +1,7 @@
 const { create, findAll, findOne, findAllAdm, remove, restore, buyProduct } = require('../controller/cart.controller')
 const { Router } = require('express')
 const { auth } = require('../middlewares/auth.middleware')
+const { logger } = require('../middlewares/log.middleware')
 
 class CartRouter{
   routesFromCart(){
